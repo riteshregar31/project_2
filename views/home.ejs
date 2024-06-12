@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="/stylesheets/home.css"> -->
 
 </head>
@@ -15,9 +16,12 @@
         <button>search</button>
     </form>
     <!-- <div id="temp"></div> -->
-     <div id="container">
+     <div class="row" id="row">
+        <div id="container" class="card" >
 
+        </div>
      </div>
+     
     <script>
         const form=document.querySelector('#searchform');
         form.addEventListener('submit',async function(e){
@@ -28,6 +32,7 @@
             const res=await axios.get(`https://api.tvmaze.com/search/shows`,config)
             // console.log(res.data[0].show.image.medium);
             // console.log(res.data[0].show.id);
+            console.log(res.data)
             makeimage(res.data)
             
             // document.getElementById
@@ -44,7 +49,7 @@
         const makeimage=(shows)=>{
 
 
-    const element = document.getElementById("container");
+    const element = document.getElementById("row");
     while (element.firstChild) {
     element.removeChild(element.lastChild);
   }
@@ -52,25 +57,69 @@
 
             for(let result of shows){
                 if(result.show.image){
-                    const para=document.createElement('P');
+                    const para=document.createElement('div');
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
+                    img.className="d-block w-100"
+                    img.style="height: 15rem; width: 7rem;"
             img.src=result.show.image.medium;
             //  button.style.color="#fff"
+            const title=document.createElement('h6');
+
+            // para.style.textAlign="center";
+            para.style="width: 20rem; "
+            para.className = "card boarder border-3"
+            // title.className="card "
+            title.style="text-align: center;"
             const textnode = document.createTextNode(result.show.genres);
+            const gen=document.createElement('span')
+            var gent=document.createTextNode(" Genres :");
+            gen.append(gent);
+            gen.append(textnode)
+          
             const textnode1 = document.createTextNode(result.show.language);
-            const textnode2 = document.createTextNode(result.show.summary);
+const name=document.createTextNode(result.show.name);
+title.append(name);
+para.append(title)
+
+            // let textnode2 =((result.show.summary));
+            // const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
+
+
+
+
+            //  textnode2 = textnode2.replace(tagRegExp, '');
+            //  console.log(textnode2)
+            //  const texnode22=document.createTextNode(textnode2);
+            var showr=document.createElement('span')
             const textnode3 = document.createTextNode(result.show.averageRuntime);
+            // let rating="rating:"
+            var r=document.createElement('span')
+            var text = document.createTextNode(" Rating :");
+            var showlan = document.createTextNode(" Language :");
+            let rating=document.createTextNode(result.show.rating.average);
+            // if(rating===null){
+            //     rating="not available"
+            // }
             // const textnode4 = document.createTextNode(result.show.webChannel.name);
-            
+            r.append(text)
+            r.append(rating)
+            showr.append(showlan);
+            showr.append(textnode1)
             button.innerHTML="More"
            
             para.append(img);
+            para.append(gen)
             // para.append(button)
-            para.append(textnode)
-            para.append(textnode1)
-            para.append(textnode2)
-            para.append(textnode3)
+            // para.append(textnode)
+            // para.append(textnode1)
+            // para.append(textnode22)
+            var br = document.createElement("br");
+            para.append(br)
+            para.append(showr)
+            var br = document.createElement("br");
+            para.append(br)
+            para.append(r)
             // para.append(textnode4)
 //             button.onclick = function()
 // {
@@ -88,11 +137,13 @@ para.append(my_form)
 
             console.log(result.show.id);
             // document.body.append(div)
-            document.getElementById("container").appendChild(para)
+            document.getElementById("row").appendChild(para)
 
                 }
             }
         }
             </script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -8,18 +8,46 @@
 </head>
 <body>
     <p><%=id%></p>
-    <div id="pinfo"></div>
-    <div id="castinfo"></div>
+    <div id="pinfo">
+       <h1> Person Info</h1>
+    </div>
+    <br>
+    <br>
+    <div id="castinfo">
+        <h1>Cast info</h1></div>
+        <br>
+        <br>
+    <div id="crewinfo"><h1>Crew info</h1></div>
+  
     <script>
 first();
 async function first(){
     const rest=await axios.get(` https://api.tvmaze.com/people/<%=id%>`)
-    // console.log(rest.data)
+    console.log(rest.data)
+    const para=document.createElement('P');
+    const bday=document.createTextNode(rest.data.birthday);
+    const gender=document.createTextNode(rest.data.gender);
+    const name=document.createTextNode(rest.data.name);
+    if(rest.data.image){
+        const img=document.createElement('IMG');
+        img.src=rest.data.image.medium
+        para.append(img);
+    }
+    if(rest.data.country.name){
+        const country=document.createTextNode(rest.data.country.name);
+        para.append(country)
+    }
+    para.append(bday)
+    para.append(name)
+    para.append(gender)
+    document.getElementById("pinfo").appendChild(para)
+    // basicinfo(rest.data)
 }
+
 second();
 async function second(){
     const rest=await axios.get(`https://api.tvmaze.com/people/<%=id%>/castcredits?embed=show`)
-    console.log(rest.data)
+    // console.log(rest.data)
     castinfofn(rest.data);
 }
 const castinfofn =(infos)=>{
@@ -49,6 +77,43 @@ para.append(my_form)
 document.getElementById("castinfo").appendChild(para)
     }
 }
+third();
+async function third(){
+ const rest=   await axios.get(`https://api.tvmaze.com/people/<%=id%>/crewcredits?embed=show`)
+    // console.log(rest.data)
+    creww(rest.data);
+}
+const creww =(infos)=>{
+    for(let info of infos){
+        const para=document.createElement('P');
+        const type=document.createTextNode(info.type);
+        const showname=document.createTextNode(info._embedded.name);
+        if(info._embedded.show.image){
+                    // console.log(season.image.medium)
+                    const img=document.createElement('IMG');
+                    img.src=info._embedded.show.image.medium;
+                    para.append(img);
+                }
+
+para.append(type)
+
+                const button=document.createElement('button')
+                button.innerHTML="More info"
+                my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+const idd=info._embedded.show.id
+// console.log(cast.person.id)
+
+my_form.action=`/showinfo/${idd}`;
+my_form.appendChild(button);
+para.append(my_form)
+document.getElementById("crewinfo").appendChild(para)
+    }
+
+}
+
+
     </script>
 </body>
 </html>
