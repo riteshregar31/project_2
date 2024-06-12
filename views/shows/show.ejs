@@ -9,17 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="/stylesheets/home.css"> -->
 
+    
 </head>
 <body>
-    <p>slfsldjfldjsfjldsf</p>
-    <p>
+  
+    <!-- <p>
         <%=id%>
-    </p>
+    </p> -->
     <div id="container">
-Info
+<!-- Info -->
     </div>
-    <div id="seasons">
-        list fo seasons
+    <div id="seasons" class="col">
+        <div id="cast">
+            <h1> list of season</h1>
+         </div>
     </div>
     <div class="row" id="row">
         <div id="cast" class="card">
@@ -98,25 +101,43 @@ Info
                 if(cast.person.image){
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
-                    img.className="d-block w-100"
-                    img.style="height: 15rem; width: 7rem;"
+                    img.className="d-block "
+                    img.style="height: 14rem; width: 14rem;"
                     img.src=cast.person.image.medium;
                     para.append(img);
                 }
                 const name=document.createTextNode(cast.person.name);
                 const gender=document.createTextNode(cast.person.gender);
                 const dob=document.createTextNode(cast.person.birthday);
+                const showname=document.createTextNode(cast.character.name);
+                const gen=document.createElement('span')
+                let na=document.createTextNode(" Name: ");
+                gen.append(na);
+                gen.append(name)
+
+                const gen1=document.createElement('span')
+                let na1=document.createTextNode(" Role: ");
+                gen1.append(na1);
+                gen1.append(showname)
+                const gen2=document.createElement('span')
+                let na2=document.createTextNode("Gender :");
+                gen2.append(na2);
+                gen2.append(gender)
+
+                const gen3=document.createElement('span')
+                let na3=document.createTextNode("birthdate: ");
+                gen3.append(na3);
+                gen3.append(dob)
+                para.append(gen)
+                para.append(gen2)
+                para.append(gen3)
+                para.append(gen1)
                 if(cast.person.country){
                     const country=document.createTextNode(cast.person.country.name);
                     para.append(country)
                 }
               
-                const showname=document.createTextNode(cast.character.name);
-                para.append(name)
-                para.append(gender)
-                para.append(dob)
-           
-                para.append(showname)
+                
                
                 button.innerHTML="More info"
                 my_form=document.createElement('FORM');
@@ -151,9 +172,16 @@ para.append(my_form)
         }
         const makeseasons=(seasons)=>{
             let i=0;
+          
             for(let season of seasons){
                 i++;
-                const para=document.createElement('P');
+                const text=document.createTextNode(`season ${i}`);
+                const para=document.createElement('div');
+                var br = document.createElement("br");
+                   para.style="width: 100rem;height:15rem  "
+            para.className = " border border-4"
+                para.append(text)
+                para.append(br)
                 // console.log(season.id)  //each season id
                 tt();
                 async function tt(){
@@ -166,11 +194,14 @@ para.append(my_form)
                 if(season.image){
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
+                     img.className="d-block w-10"
+                    img.style="height: 12rem; width: 7rem; float: left; margin: 0 0 0 15px;"
                     img.src=season.image.medium;
                     para.append(img);
                 }
-                const text=document.createTextNode(`season ${i}`);
-               
+                
+               let sp=document.createElement('span')
+
                 let textnode2 = (season.summary);
             if(textnode2){
                 const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
@@ -183,15 +214,17 @@ textnode2 = textnode2.replace(tagRegExp, '');
 console.log(textnode2)
             }
             const textnode22=document.createTextNode(textnode2)
+          sp.append(textnode22)
           
-                para.append(text)
-                var br = document.createElement("br");
-                para.append(br)
-                para.append(textnode22);
+            
+               
+                para.append(sp);
+                //  para.append(br)
 
 
 
                 const button=document.createElement('button')
+                button.style=" position: absolute; right: 0; "
                 // }
 my_form=document.createElement('FORM');
 my_form.name='myForm';
