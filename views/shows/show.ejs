@@ -18,6 +18,9 @@
 
     </div>
     <div id="seasons"></div>
+    <div id="cast">
+        Cast of show
+    </div>
     <script>
         f();
         async function f() {
@@ -49,6 +52,52 @@
             para.append(textnode3)
             document.getElementById("container").appendChild(para)
         }
+        third();
+        async function third(){
+            const rest=await axios.get(` https://api.tvmaze.com/shows/<%=id%>/cast`)
+            console.log(rest.data);
+            makecast(rest.data);
+        }
+        const makecast=(casts)=>{
+            for(let cast of casts){
+                const para=document.createElement('P');
+                if(cast.person.image){
+                    // console.log(season.image.medium)
+                    const img=document.createElement('IMG');
+                    img.src=cast.person.image.medium;
+                    para.append(img);
+                }
+                const name=document.createTextNode(cast.person.name);
+                const gender=document.createTextNode(cast.person.gender);
+                const dob=document.createTextNode(cast.person.birthday);
+                if(cast.person.country){
+                    const country=document.createTextNode(cast.person.country.name);
+                    para.append(country)
+                }
+              
+                const showname=document.createTextNode(cast.character.name);
+                para.append(name)
+                para.append(gender)
+                para.append(dob)
+           
+                para.append(showname)
+                const button=document.createElement('button')
+                button.innerHTML="More info"
+                my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+const idd=cast.person.id;
+// console.log(cast.person.id)
+
+my_form.action=`/people/${idd}`;
+my_form.appendChild(button);
+para.append(my_form)
+                document.getElementById("cast").appendChild(para)
+            }
+        }
+
+
+
         second();
         async function second(){
             // const rest=await axios.get(` https://api.tvmaze.com/shows/<%=id%>/episodes`)  it is all episodes

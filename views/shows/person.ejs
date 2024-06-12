@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personinfo</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+    <p><%=id%></p>
+    <div id="pinfo"></div>
+    <div id="castinfo"></div>
+    <script>
+first();
+async function first(){
+    const rest=await axios.get(` https://api.tvmaze.com/people/<%=id%>`)
+    // console.log(rest.data)
+}
+second();
+async function second(){
+    const rest=await axios.get(`https://api.tvmaze.com/people/<%=id%>/castcredits?embed=show`)
+    console.log(rest.data)
+    castinfofn(rest.data);
+}
+const castinfofn =(infos)=>{
+    for(let info of infos){
+        const para=document.createElement('P');
+        const showname=document.createTextNode(info._embedded.name);
+        if(info._embedded.show.image){
+                    // console.log(season.image.medium)
+                    const img=document.createElement('IMG');
+                    img.src=info._embedded.show.image.medium;
+                    para.append(img);
+                }
+
+
+
+                const button=document.createElement('button')
+                button.innerHTML="More info"
+                my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+const idd=info._embedded.show.id
+// console.log(cast.person.id)
+
+my_form.action=`/showinfo/${idd}`;
+my_form.appendChild(button);
+para.append(my_form)
+document.getElementById("castinfo").appendChild(para)
+    }
+}
+    </script>
+</body>
+</html>

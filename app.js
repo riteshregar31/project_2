@@ -35,6 +35,10 @@ app.get('/showinfo/:id',(req,res)=>{
     const {id}=req.params;
     res.render('shows/episodes',{id})
   })
+  app.get('/people/:id',(req,res)=>{
+    const {id}=req.params;
+    res.render('shows/person',{id})
+  })
 app.listen(8000,()=>{
     console.log('port 8k open')
 })
