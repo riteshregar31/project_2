@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <!-- <link rel="stylesheet" href="/stylesheets/home.css"> -->
+
+</head>
+<body>
+    <h1>show search</h1>
+    <form id="searchform">
+        <input type="text" name="query" placeholder="show title">
+        <button>search</button>
+    </form>
+    <!-- <div id="temp"></div> -->
+     <div id="container">
+
+     </div>
+    <script>
+        const form=document.querySelector('#searchform');
+        form.addEventListener('submit',async function(e){
+            e.preventDefault();
+          
+            const searchterm=form.elements.query.value;
+            const config={params:{q:searchterm}}
+            const res=await axios.get(`https://api.tvmaze.com/search/shows`,config)
+            // console.log(res.data[0].show.image.medium);
+            // console.log(res.data[0].show.id);
+            makeimage(res.data)
+            
+            // document.getElementById
+            // ("temp").innerHTML+=`<h1 style="color:blue;">dfdsfdsf</h1>`
+            // const element = document.getElementById("temp");
+            // element.remove();
+        //  console.log(res.data)
+        //  console.log(res.data.language)
+        //  console.log(res.data.genres)
+        //  console.log(res.data.summary)
+        //  console.log(res.data.webChannel.name)
+        //  console.log(res.data.averageRuntime)
+        })
+        const makeimage=(shows)=>{
+
+
+    const element = document.getElementById("container");
+    while (element.firstChild) {
+    element.removeChild(element.lastChild);
+  }
+
+
+            for(let result of shows){
+                if(result.show.image){
+                    const para=document.createElement('P');
+                    const button=document.createElement('button')
+                    const img=document.createElement('IMG');
+            img.src=result.show.image.medium;
+            //  button.style.color="#fff"
+            const textnode = document.createTextNode(result.show.genres);
+            const textnode1 = document.createTextNode(result.show.language);
+            const textnode2 = document.createTextNode(result.show.summary);
+            const textnode3 = document.createTextNode(result.show.averageRuntime);
+            // const textnode4 = document.createTextNode(result.show.webChannel.name);
+            
+            button.innerHTML="More"
+           
+            para.append(img);
+            // para.append(button)
+            para.append(textnode)
+            para.append(textnode1)
+            para.append(textnode2)
+            para.append(textnode3)
+            // para.append(textnode4)
+//             button.onclick = function()
+// {
+//     alert("hello, world");
+// }
+my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+const idd=result.show.id;
+
+my_form.action=`/showinfo/${idd}`;
+my_form.appendChild(button);
+para.append(my_form)
+
+
+            console.log(result.show.id);
+            // document.body.append(div)
+            document.getElementById("container").appendChild(para)
+
+                }
+            }
+        }
+            </script>
+</body>
+</html>

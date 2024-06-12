@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episodes</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+
+    
+    <p>hhkhkjh</p>
+    <p><%=id%></p>
+    <div id="container">
+
+    </div>
+    <script>
+          second();
+        async function second(){
+            // const rest=await axios.get(` https://api.tvmaze.com/shows/<%=id%>/episodes`)  it is all episodes
+
+            const rest=await axios.get(`https://api.tvmaze.com/seasons/<%=id%>/episodes`);
+            console.log(rest.data);
+            showepisodes(rest.data);
+           
+            // 
+           
+
+            
+            
+            
+            // console.log(rest.data)
+        }
+        const showepisodes=(episodes)=>{
+let i=0;
+for(let episode of episodes){
+    i++;
+    const para=document.createElement('P');
+    if(episode.image){
+                    // console.log(season.image.medium)
+                    const img=document.createElement('IMG');
+                    img.src=episode.image.medium;
+                    para.append(img);
+                }
+                const text=document.createTextNode(`episode ${i}`);
+                const text1=document.createTextNode(episode.summary);
+                para.append(text)
+                var br = document.createElement("br");
+                para.append(br)
+                para.append(text1);
+                document.getElementById("container").appendChild(para)
+}
+
+
+        }
+    </script>
+</body>
+</html>

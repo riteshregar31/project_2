@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <!-- <link rel="stylesheet" href="/stylesheets/home.css"> -->
+
+</head>
+<body>
+    <p>slfsldjfldjsfjldsf</p>
+    <p>
+        <%=id%>
+    </p>
+    <div id="container">
+
+    </div>
+    <div id="seasons"></div>
+    <script>
+        f();
+        async function f() {
+            // e.preventdefault();
+            // e.preventDefault();
+            const rest= await axios.get(` https://api.tvmaze.com/shows/<%=id%>`)
+            // console.log(rest.data)
+
+            const para=document.createElement('P');
+                    const button=document.createElement('button')
+                    const img=document.createElement('IMG');
+            img.src=rest.data.image.medium;
+            //  button.style.color="#fff"
+            const textnode = document.createTextNode(rest.data.genres);
+            const textnode1 = document.createTextNode(rest.data.language);
+            const textnode2 = document.createTextNode(rest.data.summary);
+            const textnode3 = document.createTextNode(rest.data.averageRuntime);
+            // const textnode4 = document.createTextNode(rest.show.webChannel.name);
+            
+            button.innerHTML="More"
+           
+            para.append(img);
+            // para.append(button)
+            para.append(textnode)
+            para.append(textnode1)
+            para.append(textnode2)
+            para.append(textnode3)
+            document.getElementById("container").appendChild(para)
+        }
+        second();
+        async function second(){
+            // const rest=await axios.get(` https://api.tvmaze.com/shows/<%=id%>/episodes`)  it is all episodes
+
+            const rest=await axios.get(`https://api.tvmaze.com/shows/<%=id%>/seasons`)
+            makeseasons(rest.data);
+           
+            // 
+           
+
+            
+            
+            
+            // console.log(rest.data)
+        }
+        const makeseasons=(seasons)=>{
+            let i=0;
+            for(let season of seasons){
+                i++;
+                const para=document.createElement('P');
+                // console.log(season.id)  //each season id
+                tt();
+                async function tt(){
+                    const f=await axios.get(`https://api.tvmaze.com/seasons/${season.id}/episodes`)
+                    console.log(f.data);
+                }
+               
+
+                // console.log(season.summary)
+                if(season.image){
+                    // console.log(season.image.medium)
+                    const img=document.createElement('IMG');
+                    img.src=season.image.medium;
+                    para.append(img);
+                }
+                const text=document.createTextNode(`season ${i}`);
+                const text1=document.createTextNode(season.summary);
+                para.append(text)
+                var br = document.createElement("br");
+                para.append(br)
+                para.append(text1);
+
+
+
+                const button=document.createElement('button')
+                // }
+my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+// const idd=result.show.id;
+button.innerHTML="show episodes"
+
+ my_form.action=`/seasons/${season.id}/episodes`;
+my_form.appendChild(button);
+para.append(my_form)
+                
+                document.getElementById("seasons").appendChild(para)
+
+            }
+            }
+    
+   
+    </script>
+    
+</body>
+</html>
