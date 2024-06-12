@@ -21,9 +21,12 @@ Info
     <div id="seasons">
         list fo seasons
     </div>
-    <div id="cast">
-       <h1> Cast of show</h1>
-    </div>
+    <div class="row" id="row">
+        <div id="cast" class="card">
+            <h1> Cast of show</h1>
+         </div>
+     </div>
+ 
     <script>
         f();
         async function f() {
@@ -33,6 +36,10 @@ Info
              console.log(rest.data)
 
             const para=document.createElement('P');
+            const title=document.createElement('h6');
+            let name=document.createTextNode(rest.data.name);
+            title.append(name);
+            para.append(title)
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
             img.src=rest.data.image.medium;
@@ -41,7 +48,12 @@ Info
             var container = document.createElement("span");
             container.append(rating);
             container.style.color = "red";
+            // const textnode = document.createTextNode(rest.data.genres);
             const textnode = document.createTextNode(rest.data.genres);
+            const gen=document.createElement('span')
+            var gent=document.createTextNode(" Genres :");
+            gen.append(gent);
+            gen.append(textnode)
             const textnode1 = document.createTextNode(rest.data.language);
             let textnode2 = (rest.data.summary);
             
@@ -61,7 +73,9 @@ Info
            
             para.append(img);
             // para.append(button)
-            para.append(textnode)
+            para.append(gen)
+            var br = document.createElement("br");
+            // para.append(br)
             // para.append(rating)
             para.append(container)
             para.append(textnode1)
@@ -77,10 +91,15 @@ Info
         }
         const makecast=(casts)=>{
             for(let cast of casts){
-                const para=document.createElement('P');
+                const para=document.createElement('div');
+                   para.style="width: 20rem; "
+            para.className = "card boarder border-3"
+                const button=document.createElement('button')
                 if(cast.person.image){
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
+                    img.className="d-block w-100"
+                    img.style="height: 15rem; width: 7rem;"
                     img.src=cast.person.image.medium;
                     para.append(img);
                 }
@@ -98,7 +117,7 @@ Info
                 para.append(dob)
            
                 para.append(showname)
-                const button=document.createElement('button')
+               
                 button.innerHTML="More info"
                 my_form=document.createElement('FORM');
 my_form.name='myForm';
@@ -109,7 +128,7 @@ const idd=cast.person.id;
 my_form.action=`/people/${idd}`;
 my_form.appendChild(button);
 para.append(my_form)
-                document.getElementById("cast").appendChild(para)
+                document.getElementById("row").appendChild(para)
             }
         }
 
