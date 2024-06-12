@@ -43,11 +43,13 @@ for(let episode of episodes){
                     para.append(img);
                 }
                 const text=document.createTextNode(`episode ${i}`);
+                const rating=document.createTextNode(episode.rating.average);
                 const name=document.createTextNode(episode.name);
                 const text1=document.createTextNode(episode.summary);
                 const text2=document.createTextNode(episode.runtime);
                 para.append(text)
                 para.append(name)
+                para.append(rating)
                 var br = document.createElement("br");
                 para.append(br)
                 para.append(text1);

@@ -24,13 +24,14 @@
             // e.preventdefault();
             // e.preventDefault();
             const rest= await axios.get(` https://api.tvmaze.com/shows/<%=id%>`)
-            // console.log(rest.data)
+             console.log(rest.data)
 
             const para=document.createElement('P');
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
             img.src=rest.data.image.medium;
             //  button.style.color="#fff"
+            const rating=document.createTextNode(rest.data.rating.average);
             const textnode = document.createTextNode(rest.data.genres);
             const textnode1 = document.createTextNode(rest.data.language);
             const textnode2 = document.createTextNode(rest.data.summary);
@@ -42,6 +43,7 @@
             para.append(img);
             // para.append(button)
             para.append(textnode)
+            para.append(rating)
             para.append(textnode1)
             para.append(textnode2)
             para.append(textnode3)
@@ -71,7 +73,7 @@
                 tt();
                 async function tt(){
                     const f=await axios.get(`https://api.tvmaze.com/seasons/${season.id}/episodes`)
-                    console.log(f.data);
+                    // console.log(f.data);
                 }
                
 
