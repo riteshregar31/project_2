@@ -11,23 +11,23 @@
 
     
 </head>
-<body>
+<body style="width: auto;" >
   
     <!-- <p>
         <%=id%>
     </p> -->
-    <div id="container">
+    <div id="container" class="col d-flex flex-column">
 <!-- Info -->
     </div>
-    <div id="seasons" class="col">
+    <div id="seasons" class="col d-flex flex-column ">
         <div id="cast">
             <h1> list of season</h1>
          </div>
     </div>
-    <div class="row" id="row">
-        <div id="cast" class="card">
+    <div class="row d-flex" id="row" style=" width: auto">
+      
             <h1> Cast of show</h1>
-         </div>
+       
      </div>
  
     <script>
@@ -38,7 +38,9 @@
             const rest= await axios.get(` https://api.tvmaze.com/shows/<%=id%>`)
              console.log(rest.data)
 
-            const para=document.createElement('P');
+            const para=document.createElement('div');
+             para.style="width: auto;height:auto;  "
+            para.className = " border border-2"
             const title=document.createElement('h6');
             let name=document.createTextNode(rest.data.name);
             title.append(name);
@@ -46,17 +48,27 @@
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
             img.src=rest.data.image.medium;
+              img.className="d-block w-10"
+                    img.style="height: 20rem; width: 20rem; float: left; margin: 0 0 0 15px;"
             //  button.style.color="#fff"
             let rating=document.createTextNode(rest.data.rating.average);
             var container = document.createElement("span");
+            var t=document.createTextNode('Rating: ')
+            container.append(t)
+            // rating.style.color = "red";
             container.append(rating);
-            container.style.color = "red";
+           
             // const textnode = document.createTextNode(rest.data.genres);
             const textnode = document.createTextNode(rest.data.genres);
             const gen=document.createElement('span')
             var gent=document.createTextNode(" Genres :");
             gen.append(gent);
             gen.append(textnode)
+            let dd=document.createElement('span');
+            var tt=document.createTextNode('Language: ')
+            dd.append(tt)
+          
+            // container.append(t)
             const textnode1 = document.createTextNode(rest.data.language);
             let textnode2 = (rest.data.summary);
             
@@ -69,21 +81,38 @@
              textnode2 = textnode2.replace(tagRegExp, '');
              console.log(textnode2)
              const textnode22=document.createTextNode(textnode2);
+             dd.append(textnode1)
+             let ddd=document.createElement('span');
+             let rt=document.createTextNode('Average runtime: ')
+             ddd.append(rt);
             const textnode3 = document.createTextNode(rest.data.averageRuntime);
             // const textnode4 = document.createTextNode(rest.show.webChannel.name);
-            
+            ddd.append(textnode3)
           
            
             para.append(img);
             // para.append(button)
             para.append(gen)
             var br = document.createElement("br");
+                // para.append(br)
+                para.append(br);
+            var br = document.createElement("br");
             // para.append(br)
             // para.append(rating)
             para.append(container)
-            para.append(textnode1)
+            var br = document.createElement("br");
+                // para.append(br)
+                para.append(br);
+            para.append(dd)
+            var br = document.createElement("br");
+                // para.append(br)
+                para.append(br);
+                para.append(ddd)
+            var br = document.createElement("br");
+                // para.append(br)
+                para.append(br);
+         
             para.append(textnode22)
-            para.append(textnode3)
             document.getElementById("container").appendChild(para)
         }
         third();
@@ -102,7 +131,7 @@
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
                     img.className="d-block "
-                    img.style="height: 14rem; width: 14rem;"
+                    img.style="height: 14rem; width: 15rem;"
                     img.src=cast.person.image.medium;
                     para.append(img);
                 }
@@ -178,10 +207,10 @@ para.append(my_form)
                 const text=document.createTextNode(`season ${i}`);
                 const para=document.createElement('div');
                 var br = document.createElement("br");
-                   para.style="width: 100rem;height:15rem  "
+                   para.style="height:auto; width:auto;  "
             para.className = " border border-4"
                 para.append(text)
-                para.append(br)
+                // para.append(br)
                 // console.log(season.id)  //each season id
                 tt();
                 async function tt(){
@@ -195,14 +224,15 @@ para.append(my_form)
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
                      img.className="d-block w-10"
-                    img.style="height: 12rem; width: 7rem; float: left; margin: 0 0 0 15px;"
+                    img.style="height: 10rem; width: 10rem; float: left; margin: 0 0 0 15px;"
                     img.src=season.image.medium;
                     para.append(img);
                 }
                 
                let sp=document.createElement('span')
-
+               para.append(br)
                 let textnode2 = (season.summary);
+
             if(textnode2){
                 const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
 
@@ -214,17 +244,19 @@ textnode2 = textnode2.replace(tagRegExp, '');
 console.log(textnode2)
             }
             const textnode22=document.createTextNode(textnode2)
+            //  sp.style="width:50rem;"
           sp.append(textnode22)
           
             
                
                 para.append(sp);
+                
                 //  para.append(br)
 
 
 
                 const button=document.createElement('button')
-                button.style=" position: absolute; right: 0; "
+                button.style=" width:auto;height:auto; position: realative; right: 0; "
                 // }
 my_form=document.createElement('FORM');
 my_form.name='myForm';

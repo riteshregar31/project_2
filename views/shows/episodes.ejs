@@ -20,7 +20,7 @@
 </head>
 
 <body class="d-flex flex-column vh-100  " >
-
+<h2 id="title">List of episodes</h2>
     
     <!-- <p>hhkhkjh</p>
     <p><%=id%></p> -->
@@ -50,11 +50,12 @@ for(let episode of episodes){
     i++;
     const para=document.createElement('div');
     var br = document.createElement("br");
-    const text=document.createTextNode(`episode ${i} :`);
+    const text=document.createTextNode(`episode ${i} ,season `);
          para.style="width: auto;height:auto;  "
             para.className = " border border-2"
     para.append(text)
-  
+  let season=(episode.season)
+  para.append(`${season} :`)
     // var br = document.createElement("br");
     // para.append(br)
     
