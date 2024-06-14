@@ -181,15 +181,7 @@ app.post('/userinfo', isLoggedIn, catchAsync(async (req, res, next) => {
 app.get('/userinfo/:id', isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
   const {id}=req.params;
   const sr=await Userinfo.findById(id);
-//   var idd={idno:'565989623265'};
-//   console.log(req.params.id)
 
-// await  Userinfo.findOneAndUpdate(
-//     { _id: req.params.id }, 
-//     { $push: { showid: idd  } },
-//  );
- 
-req.flash('success', 'Welcome back!!! ')
   res.render('./shows/showuser',{sr})
 }))
 
