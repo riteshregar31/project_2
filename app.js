@@ -13,6 +13,9 @@ app.use(methodOverride('_method'));
 const ejsMate=require('ejs-mate');
 const session = require('express-session');
 const secret = process.env.SECRET || 'thisdfdssdfdsfdstet!';
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 const dburl='mongodb://127.0.0.1:27017/showmanager'
 app.use(express.urlencoded({ extended: true }));
 
@@ -55,7 +58,12 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
@@ -89,14 +97,66 @@ app.get('/newuser',async(req,res)=>{
 // })
 // user1.save();
 // res.send(user1);
-res.render('shows/newuser')
+// res.render('shows/newuser')
+res.render('users/register');
 })
 
 
+app.get('/login', (req, res) => {
+  res.render('users/login');
+})
+app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), async (req, res) => {
+   
+ 
+  const hr= await Userinfo.findOne({"author":req.user._id})
+  if(hr!=null){
+   req.flash('success', 'Welcome back!!! ')
+   const redirectUrl=req.session.returnTo||`/userinfo/${hr.id}`
+   res.redirect(redirectUrl);
+
+  }
+  else{
+ req.flash('success', 'enter your information ')
+   // console.log('i did not have author')
+   const redirectUrl='/newuserinfo';
+     res.redirect(redirectUrl);
+  }
+
+})
+
+app.get('/newuserinfo',(req,res)=>{  
+  res.render('shows/newuser');
+})
+app.post('/register', catchAsync(async (req, res, next) => {
+  try {
+      const { email, username, password } = req.body;
+      const user = new User({ email, username });
+      const registeredUser = await User.register(user, password);
+      req.login(registeredUser, err => {
+          if (err) return next(err);
+          req.flash('success', 'Account created !!!');
+          res.redirect('/login');
+      })
+  } catch (e) {
+      req.flash('error', e.message);
+      res.redirect('register');
+  }
+}));
+
+
+app.get('/logout', (req, res) => {
+  req.logout(function(err) {
+    if (err) { return res.status(500).json({ message: "Error during logout." }); }
+    req.flash('success', "Goodbye!");
+    res.redirect('/');
+  });
+ 
+})
 
 app.post('/userinfo', catchAsync(async (req, res, next) => {
   const hr = new Userinfo(req.body.sr);
     // console.log(hr);
+    hr.author = req.user._id;
     await hr.save();
     // req.flash('success', 'Welcome! Your account is created');
     res.redirect(`/userinfo/${hr._id}`)

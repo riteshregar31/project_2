@@ -5,6 +5,10 @@ const userinfo=new Schema({
     Age:Number,
     Gender:String,
     Country:String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     showid:[{
         idno:String
     }
