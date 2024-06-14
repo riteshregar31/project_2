@@ -211,6 +211,7 @@ app.get('/delete/wishlist/:showid',isLoggedIn,catchAsync(async (req,res)=>{
       { _id: hr.id }, 
       { $pull: { showid: idd  } },
     );
+    req.flash('success', "removed from watchlist");
     res.redirect(`/userinfo/${sr._id}`)
     console.log(hr)
   }
@@ -282,6 +283,7 @@ await  Userinfo.findOneAndUpdate(
 );
 // res.send('sfdsf')
 // res.render('./shows/showuser',{sr})
+req.flash('success', "added to watchlist!");
 res.redirect(`/userinfo/${sr._id}`)
   }
   else{

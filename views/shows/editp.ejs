@@ -29,8 +29,9 @@
                     </div>
                    
 <div class="mb-3">
-    <select class="form-select" aria-label="Default select example" name="sr[Gender]" id="Gender">
-        <option selected >Choose your gender</option>
+    <select class="form-select" aria-label="Default select example" name="sr[Gender]" id="Gender" required>
+    
+        <option value="<%=sr.Gender%>" >Choose your Gender</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         <option value="Other">Other</option>
@@ -40,8 +41,8 @@
                     
                     
 <div class="mb-3">
-    <select class="form-select" aria-label="Default select example" name="sr[Country]" id="Country">
-        <option selected >Choose your country</option>
+    <select class="form-select" aria-label="Default select example" name="sr[Country]" id="Country" required>
+        <option  value="<%=sr.Country%>" >Choose your country</option>
         <option value="Afghanistan">Afghanistan</option>
         <option value="Åland Islands">Åland Islands</option>
         <option value="Albania">Albania</option>
