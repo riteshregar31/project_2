@@ -12,12 +12,59 @@
     
 </head>
 <body style="width: auto;" >
-  
+    <main>
+        <%-include('../partials/flash') %>
+      </main>
     <!-- <p>
         <%=id%>
     </p> -->
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">ShowManager</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                
+              </li>
+              <li class="nav-item">
+               
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+           
+            <!-- <a class="nav-link" href="#">Login</a>
+            <a class="nav-link" href="#">Register</a> -->
+            <% if(!currentUser) { %>
+              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="/newuser">Register</a>
+              <% } else { %>
+                <a class="nav-link" href="/getprofile">Profile</a>
+              <a class="nav-link" href="/logout">Logout</a>
+              <% } %>
+          </div>
+        </div>
+      </nav>
+    <div>
+
+
+
+
+<!-- <%  if( currentUser )  {%>
+    <p>yesssssss</p>
+    <% } %> -->
+    </div>
     <div id="container" class="col d-flex flex-column">
-<!-- Info -->
+Info
+
     </div>
     <div id="seasons" class="col d-flex flex-column ">
         <div id="cast">
@@ -35,6 +82,7 @@
         async function f() {
             // e.preventdefault();
             // e.preventDefault();
+            // console.log(user.id)
             const rest= await axios.get(` https://api.tvmaze.com/shows/<%=id%>`)
              console.log(rest.data)
 
@@ -113,6 +161,26 @@
                 para.append(br);
          
             para.append(textnode22)
+
+
+
+            button.innerHTML="Add to wishlist"
+                my_form=document.createElement('FORM');
+my_form.name='myForm';
+my_form.method='GET';
+ const idd=rest.data.id;
+//  console.log(idd)
+// console.log(cast.person.id)
+
+ my_form.action=`/userinfo/add/${idd}`;
+my_form.appendChild(button);
+para.append(my_form)
+// if(currentUser){
+//     console.log('yes ther is user')
+// }
+// else{
+//     console.log('no user')
+// }
             document.getElementById("container").appendChild(para)
         }
         third();

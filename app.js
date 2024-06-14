@@ -1,3 +1,10 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
+
+
+
 const express=require('express');
 const app=express();
 
@@ -12,9 +19,11 @@ const flash = require('connect-flash');
 app.use(methodOverride('_method'));
 const ejsMate=require('ejs-mate');
 const session = require('express-session');
+const mongoSanitize = require('express-mongo-sanitize');
 const secret = process.env.SECRET || 'thisdfdssdfdsfdstet!';
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const { isLoggedIn,isAuthor } = require('./islogmiddle');
 const User = require('./models/user');
 const dburl='mongodb://127.0.0.1:27017/showmanager'
 app.use(express.urlencoded({ extended: true }));
@@ -41,6 +50,10 @@ app.set('view engine','ejs')
 app.engine('ejs',ejsMate)
 app.set('views',path.join(__dirname,'views'))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(mongoSanitize({
+  replaceWith: '_'
+}))
+
 // app.use(express.static(path.join(__dirname, 'public')))
 const sessionConfig = {
   
@@ -153,7 +166,7 @@ app.get('/logout', (req, res) => {
  
 })
 
-app.post('/userinfo', catchAsync(async (req, res, next) => {
+app.post('/userinfo', isLoggedIn, catchAsync(async (req, res, next) => {
   const hr = new Userinfo(req.body.sr);
     // console.log(hr);
     hr.author = req.user._id;
@@ -165,7 +178,7 @@ app.post('/userinfo', catchAsync(async (req, res, next) => {
 
 
 
-app.get('/userinfo/:id',catchAsync(async(req,res)=>{
+app.get('/userinfo/:id', isLoggedIn,isAuthor,catchAsync(async(req,res)=>{
   const {id}=req.params;
   const sr=await Userinfo.findById(id);
 //   var idd={idno:'565989623265'};
@@ -183,7 +196,7 @@ req.flash('success', 'Welcome back!!! ')
 
 
 
-app.get('/userinfo/:id/editp',catchAsync(async (req,res)=>{
+app.get('/userinfo/:id/editp',isLoggedIn,isAuthor,catchAsync(async (req,res)=>{
   const {id}=req.params;
   const sr=await Userinfo.findById(id);
   res.render('./shows/editp',{sr})
@@ -193,22 +206,35 @@ app.get('/userinfo/:id/editp',catchAsync(async (req,res)=>{
 
 
 
-app.get('/delete/wishlist/:id/:showid',catchAsync(async (req,res)=>{
-  const {id,showid}=req.params;
+app.get('/delete/wishlist/:showid',isLoggedIn,catchAsync(async (req,res)=>{
+
+  const {showid}=req.params;
+  // console.log(showid)
   var idd={idno:showid};
-const sr=await Userinfo.findById(id);
-await  Userinfo.findOneAndUpdate(
-  { _id: req.params.id }, 
-  { $pull: { showid: idd  } },
-);
-res.send('sfsfd')
+  const hr= await Userinfo.findOne({"author":req.user._id})
+  if(hr!=null){
+   
+    const sr=await Userinfo.findById(hr.id);
+    await  Userinfo.findOneAndUpdate(
+      { _id: hr.id }, 
+      { $pull: { showid: idd  } },
+    );
+    res.redirect(`/userinfo/${sr._id}`)
+    console.log(hr)
+  }
+
+else{
+  res.redirect('/');
+}
+
+// res.send('sfsfd')
 }))
 
 
 
 
 
-app.put('/userinfo/:id', catchAsync(async(req, res) => {
+app.put('/userinfo/:id',isLoggedIn,isAuthor, catchAsync(async(req, res) => {
   const { id } = req.params;
 
 //   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -232,18 +258,58 @@ app.put('/userinfo/:id', catchAsync(async(req, res) => {
 
 
 
-app.get('/userinfo/:id/add/:showid',catchAsync(async(req,res)=>{
-const {id,showid}=req.params;
-console.log(showid)
-var idd={idno:showid};
-const sr=await Userinfo.findById(id);
+app.get('/userinfo/add/:showid',isLoggedIn,catchAsync(async(req,res)=>{
+
+
+
+
+  const{showid}=req.params;
+  var idd={idno:showid};
+
+  const hr= await Userinfo.findOne({"author":req.user._id})
+  if(hr!=null){
+  //  req.flash('success', 'Welcome back!!! ')
+  //  const redirectUrl=`/userinfo/${hr.id}`
+  //  res.redirect(redirectUrl);
+// const id=hr.id;
+const arr=hr.showid;
+console.log(arr);
+for(show of arr){
+  // console.log(show.idno)
+  if(show.idno==showid){
+    // console.log('its present already')
+    req.flash('success', 'you already added to your watchlist ')
+    res.redirect(`/showinfo/${showid}`)
+    
+  }
+}
+const sr=await Userinfo.findById(hr.id);
 await  Userinfo.findOneAndUpdate(
-  { _id: req.params.id }, 
+  { _id: hr.id }, 
   { $push: { showid: idd  } },
 );
 // res.send('sfdsf')
 // res.render('./shows/showuser',{sr})
 res.redirect(`/userinfo/${sr._id}`)
+  }
+  else{
+//  req.flash('success', 'enter your information ')
+//    // console.log('i did not have author')
+//    const redirectUrl='/newuserinfo';
+//      res.redirect(redirectUrl);
+res.redirect('/')
+  }
+// const {id,showid}=req.params;
+// console.log(showid)
+// var idd={idno:showid};
+// const sr=await Userinfo.findById(id);
+// await  Userinfo.findOneAndUpdate(
+//   { _id: req.params.id }, 
+//   { $push: { showid: idd  } },
+// );
+// // res.send('sfdsf')
+// // res.render('./shows/showuser',{sr})
+// res.redirect(`/userinfo/${sr._id}`)
 
 }))
 
@@ -260,7 +326,12 @@ app.get('/showinfo/:id',catchAsync((req,res)=>{
     res.render('shows/show',{id});
   }))
 
+app.get('/getprofile',(async(req,res)=>{
+  const sr= await Userinfo.findOne({"author":req.user._id})
 
+  res.redirect(`/userinfo/${sr._id}`)
+
+}))
 
 
   app.get('/seasons/:id/episodes',catchAsync((req,res)=>{
