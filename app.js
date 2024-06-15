@@ -25,7 +25,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const { isLoggedIn,isAuthor } = require('./islogmiddle');
 const User = require('./models/user');
-const dburl='mongodb://127.0.0.1:27017/showmanager'
+const MongoDBStore = require("connect-mongo")(session);
+// const dburl='mongodb://127.0.0.1:27017/showmanager'
+const dburl=process.env.DB_URL
 app.use(express.urlencoded({ extended: true }));
 
 main().catch(err => console.log(err));
@@ -53,10 +55,19 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize({
   replaceWith: '_'
 }))
+const store = new MongoDBStore({
+  url: dburl,
+  secret,
+  touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR", e)
+})
 
 // app.use(express.static(path.join(__dirname, 'public')))
 const sessionConfig = {
-  
+  store,
   name: 'session',
   secret,
   resave: false,
