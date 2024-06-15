@@ -11,7 +11,7 @@
 
     
 </head>
-<body style="width: auto;" >
+<body class="d-flex flex-column vh-100  " >
     <main>
         <%-include('../partials/flash') %>
       </main>
@@ -63,7 +63,7 @@
     <% } %> -->
     </div>
     <div id="container" class="col d-flex flex-column">
-Info
+
 
     </div>
     <div id="seasons" class="col d-flex flex-column ">
@@ -89,9 +89,10 @@ Info
             const para=document.createElement('div');
              para.style="width: auto;height:auto;  "
             para.className = " border border-2"
-            const title=document.createElement('h6');
+            const title=document.createElement('h4');
             let name=document.createTextNode(rest.data.name);
             title.append(name);
+            title.style="text-align :center"
             para.append(title)
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
