@@ -27,6 +27,7 @@ const { isLoggedIn,isAuthor } = require('./islogmiddle');
 const User = require('./models/user');
 const MongoDBStore = require("connect-mongo")(session);
 // const dburl='mongodb://127.0.0.1:27017/showmanager'
+
 const dburl=process.env.DB_URL
 app.use(express.urlencoded({ extended: true }));
 
