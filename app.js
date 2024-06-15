@@ -171,7 +171,7 @@ app.post('/userinfo', isLoggedIn, catchAsync(async (req, res, next) => {
     // console.log(hr);
     hr.author = req.user._id;
     await hr.save();
-    // req.flash('success', 'Welcome! Your account is created');
+     req.flash('success', 'information updated successfully!!');
     res.redirect(`/userinfo/${hr._id}`)
   }))
 
@@ -243,6 +243,7 @@ app.put('/userinfo/:id',isLoggedIn,isAuthor, catchAsync(async(req, res) => {
 // }
 // console.log({ ...req.body.sr });
    const sr = await Userinfo.findByIdAndUpdate(id, { ...req.body.sr });
+   req.flash('success', 'information updated successfully!!');
   res.redirect(`/userinfo/${sr._id}`);
   
 }));
