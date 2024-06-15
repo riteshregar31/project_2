@@ -146,14 +146,30 @@ let we=[]
       const para=document.createElement('div');
          para.style="width: 20rem; "
             para.className = "card boarder border-3"
-            const title=document.createElement('h6');
-            let name=document.createTextNode(rest.data.name);
-            title.append(name);
-            para.append(title)
+            // const title=document.createElement('h6');
+            // let name=document.createTextNode(rest.data.name);
+            // title.append(name);
+
+            
+const button1=document.createElement('button')
+            button1.style="margin: 0px -30px 0px -10px;"
+            button1.className="btn text-decoration-underline text "
+            button1.innerHTML=rest.data.name
+            my_form1=document.createElement('FORM');
+my_form1.name='myForm1';
+my_form1.method='GET';
+ const idd1=rest.data.id;
+//  console.log(idd)
+// console.log(cast.person.id)
+
+my_form1.action=`/showinfo/${idd1}`;
+my_form1.appendChild(button1);
+para.append(my_form1)
+            // para.append(title)
             const img=document.createElement('IMG');
             img.src=rest.data.image.medium;
           img.className="d-block "
-                    img.style="height: 14rem; width: 15rem;"
+                    img.style="height: 14rem; width: 17rem;"
             para.append(img);
             const button=document.createElement('button')
             button.style="margin: 0 -15px 0px 0px;"
@@ -168,7 +184,14 @@ my_form.method='GET';
 
  my_form.action=`/delete/wishlist/${idd}`;
 my_form.appendChild(button);
+
+
+
+
 para.append(my_form)
+
+
+
             document.getElementById("container").appendChild(para)
     }
    }
