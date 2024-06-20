@@ -95,13 +95,14 @@ for(let episode of episodes){
                     // console.log(season.image.medium)
                     const img=document.createElement('IMG');
                     img.src=episode.image.medium;
-                            img.className="d-block w-10"
+                            img.className="d-block w-10 border border-2"
                     img.style="height: auto; width: 10rem; float: left; margin: 0 0 0 15px;"
                     para.append(img);
                 }
                
                 // const rating=document.createTextNode(episode.rating.average);
                 const name=document.createTextNode(episode.name);
+              
                 para.append(name)
                 para.append(br)
                 let sp=document.createElement('span')

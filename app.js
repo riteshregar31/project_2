@@ -280,25 +280,30 @@ app.get('/userinfo/add/:showid',isLoggedIn,catchAsync(async(req,res)=>{
 // const id=hr.id;
 const arr=hr.showid;
 console.log(arr);
+let i=0;
 for(show of arr){
   // console.log(show.idno)
   if(show.idno==showid){
+    i++;
     // console.log('its present already')
     req.flash('success', 'you already added to your watchlist ')
-    res.redirect(`/showinfo/${showid}`)
+    res.redirect(`/userinfo/${hr._id}`)
     
   }
 }
-const sr=await Userinfo.findById(hr.id);
-await  Userinfo.findOneAndUpdate(
-  { _id: hr.id }, 
-  { $push: { showid: idd  } },
-);
-// res.send('sfdsf')
-// res.render('./shows/showuser',{sr})
-req.flash('success', "added to watchlist!");
-res.redirect(`/userinfo/${sr._id}`)
-  }
+if(i==0){
+  const sr=await Userinfo.findById(hr.id);
+  await  Userinfo.findOneAndUpdate(
+    { _id: hr.id }, 
+    { $push: { showid: idd  } },
+  );
+  // res.send('sfdsf')
+  // res.render('./shows/showuser',{sr})
+  req.flash('success', "added to watchlist!");
+  res.redirect(`/userinfo/${sr._id}`)
+    }
+}
+
   else{
 //  req.flash('success', 'enter your information ')
 //    // console.log('i did not have author')

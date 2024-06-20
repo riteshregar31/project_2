@@ -45,7 +45,7 @@
             <a class="navbar-brand" href="#">ShowManager</a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
                 
               </li>
               <li class="nav-item">
@@ -55,10 +55,10 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
               </li> -->
             </ul>
-            <form class="d-flex" id="searchform">
-              <input class="form-control me-2" type="text" placeholder="enter show name" aria-label="Search" name="query">
+            <!-- <form class="d-flex" id="searchform">
+              <input class="form-control me-2" type="text" placeholder="Enter Tv/Web show name" aria-label="Search" name="query">
               <button class="btn btn-outline-success" type="submit">Search </button>
-            </form>
+            </form> -->
             <!-- <a class="nav-link" href="#">Login</a>
             <a class="nav-link" href="#">Register</a> -->
             <% if(!currentUser) { %>
@@ -72,7 +72,46 @@
         </div>
       </nav>
       <main> <%-include('./partials/flash') %></main>
+
+      <br/>
+      <br/>
+      <h2 style="text-align: center;">Search Your Favourite Shows</h2>
+
+      <div class="container" style=" background-color:rgba(0,0,0,0) !important;">
+        <br/>
+      <div class="row justify-content-center">
+                            <div class="col-12 col-md-1 col-lg-8">
+                                <form class="card card-sm" id="searchform">
+                                    <div class="card-body row no-gutters align-items-center">
+                                     
+                                        <!--end of col-->
+                                        <div class="col">
+                                          <input class="form-control me-2" type="text" placeholder="Enter Tv/Web show name" aria-label="Search" name="query">
+                                        </div>
+                                        <!--end of col-->
+                                        <div class="col-auto">
+                                            <button class="btn  btn-success" type="submit">Search</button>
+                                        </div>
+                                        <!--end of col-->
+                                    </div>
+                                </form>
+                            </div>
+                            <!--end of col-->
+                        </div>
+    </div>
+      <!-- <form class="d-flex" id="searchform">
+        <input class="form-control me-2" type="text" placeholder="Enter Tv/Web show name" aria-label="Search" name="query">
+        <button class="btn btn-outline-success" type="submit">Search </button>
+      </form> -->
     <!-- <div id="temp"></div> -->
+    <br/>
+
+
+
+  
+
+    
+    
      <div class="row" id="row">
         <div id="container"  >
 
@@ -116,6 +155,7 @@
                 if(result.show.image){
                     const para=document.createElement('div');
                     const button=document.createElement('button')
+                      button.className="btn btn-outline-secondary text "
                     const img=document.createElement('IMG');
                     img.className="d-block w-100"
                     img.style="height: 15rem; width: 7rem;"
@@ -124,8 +164,9 @@
             const title=document.createElement('h6');
 
             // para.style.textAlign="center";
-            para.style="width: 20rem; "
-            para.className = "card boarder border-3"
+               para.className = "card boarder border-3  "
+            para.style="width: 20rem;  background-color:#e5eff1;"
+         
             // title.className="card "
             title.style="text-align: center;"
             const textnode = document.createTextNode(result.show.genres);

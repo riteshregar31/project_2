@@ -62,6 +62,50 @@
     <p>yesssssss</p>
     <% } %> -->
     </div>
+
+
+    <div class="row " >
+        <div class=" mx-auto" style="width: 100rem; margin: 0 0 0 0; ">
+    
+            <!-- Profile widget -->
+            <div class="bg-white " style="width: auto;">
+                <div class="px-4 pt-0 pb-4 bg-dark">
+                    <div class="media align-items-end profile-header">
+                        <div class="profile mr-3"><img id="imgg" src="" alt="can't load" width="130" class="rounded mb-2 img-thumbnail"></div>
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0" id="namee"> </h4>
+                            <h5 class="font-weight-bold mb-0 d-block" > </h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1" id="genn"></i></small>
+                            <h6 class="font-weight-bold mb-0 d-block" id="summ"  style="color: antiquewhite;"> </h6><small class="text-muted"> <i class="fa fa-user-circle-o mr-1" id="genn"></i></small>
+                            <a id="linkk" href=""  style=" float: right; margin: 0 0 0 15px; " class="btn btn-sm  btn-outline-info">Add to watchlist</a>
+                        </div>
+                      
+                    </div>
+                    
+                </div>
+    
+                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block" id="ratt"> </h5><small  class="text-muted"> <i  class="fa fa-picture-o mr-1"></i>Rating</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block" id="avgg"> </h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Avg runtime(min)</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block" id="langg"> </h5><small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Language</small>
+                        </li>
+                    </ul>
+                </div>
+    
+               
+            </div><!-- End profile widget -->
+    
+        </div>
+    </div>
+
+
+
+
     <div id="container" class="col d-flex flex-column">
 
 
@@ -91,16 +135,20 @@
             para.className = " border border-2"
             const title=document.createElement('h4');
             let name=document.createTextNode(rest.data.name);
+            
+    document.getElementById("namee").innerHTML = rest.data.name
             title.append(name);
             title.style="text-align :center"
             para.append(title)
                     const button=document.createElement('button')
                     const img=document.createElement('IMG');
             img.src=rest.data.image.medium;
+            document.getElementById("imgg").src =rest.data.image.medium ;
               img.className="d-block w-10"
                     img.style="height: 20rem; width: 20rem; float: left; margin: 0 0 0 15px;"
             //  button.style.color="#fff"
             let rating=document.createTextNode(rest.data.rating.average);
+            document.getElementById("ratt").innerHTML = rest.data.rating.average
             var container = document.createElement("span");
             var t=document.createTextNode('Rating: ')
             container.append(t)
@@ -109,6 +157,7 @@
            
             // const textnode = document.createTextNode(rest.data.genres);
             const textnode = document.createTextNode(rest.data.genres);
+            document.getElementById("genn").innerHTML =rest.data.genres
             const gen=document.createElement('span')
             var gent=document.createTextNode(" Genres :");
             gen.append(gent);
@@ -119,8 +168,9 @@
           
             // container.append(t)
             const textnode1 = document.createTextNode(rest.data.language);
+            document.getElementById("langg").innerHTML = rest.data.language
             let textnode2 = (rest.data.summary);
-            
+            document.getElementById("summ").innerHTML = rest.data.summary
             
             const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
 
@@ -135,6 +185,7 @@
              let rt=document.createTextNode('Average runtime: ')
              ddd.append(rt);
             const textnode3 = document.createTextNode(rest.data.averageRuntime);
+            document.getElementById("avgg").innerHTML = rest.data.averageRuntime
             // const textnode4 = document.createTextNode(rest.show.webChannel.name);
             ddd.append(textnode3)
           
@@ -175,6 +226,7 @@ my_form.method='GET';
 // console.log(cast.person.id)
 
  my_form.action=`/userinfo/add/${idd}`;
+ document.getElementById("linkk").href =`/userinfo/add/${idd}`;
 my_form.appendChild(button);
 para.append(my_form)
 // if(currentUser){
