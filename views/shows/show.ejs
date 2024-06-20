@@ -106,10 +106,7 @@
 
 
 
-    <div id="container" class="col d-flex flex-column">
-
-
-    </div>
+    
     <div id="seasons" class="col d-flex flex-column ">
         <div id="cast">
             <h1> list of season</h1>
@@ -128,114 +125,114 @@
             // e.preventDefault();
             // console.log(user.id)
             const rest= await axios.get(` https://api.tvmaze.com/shows/<%=id%>`)
-             console.log(rest.data)
+            //  console.log(rest.data)
 
-            const para=document.createElement('div');
-             para.style="width: auto;height:auto;  "
-            para.className = " border border-2"
-            const title=document.createElement('h4');
-            let name=document.createTextNode(rest.data.name);
+            // const para=document.createElement('div');
+            //  para.style="width: auto;height:auto;  "
+            // para.className = " border border-2"
+            // const title=document.createElement('h4');
+            // let name=document.createTextNode(rest.data.name);
             
     document.getElementById("namee").innerHTML = rest.data.name
-            title.append(name);
-            title.style="text-align :center"
-            para.append(title)
-                    const button=document.createElement('button')
-                    const img=document.createElement('IMG');
-            img.src=rest.data.image.medium;
+            // title.append(name);
+            // title.style="text-align :center"
+            // para.append(title)
+            //         const button=document.createElement('button')
+            //         const img=document.createElement('IMG');
+            // img.src=rest.data.image.medium;
             document.getElementById("imgg").src =rest.data.image.medium ;
-              img.className="d-block w-10"
-                    img.style="height: 20rem; width: 20rem; float: left; margin: 0 0 0 15px;"
-            //  button.style.color="#fff"
-            let rating=document.createTextNode(rest.data.rating.average);
+            //   img.className="d-block w-10"
+            //         img.style="height: 20rem; width: 20rem; float: left; margin: 0 0 0 15px;"
+            // //  button.style.color="#fff"
+            // let rating=document.createTextNode(rest.data.rating.average);
             document.getElementById("ratt").innerHTML = rest.data.rating.average
-            var container = document.createElement("span");
-            var t=document.createTextNode('Rating: ')
-            container.append(t)
-            // rating.style.color = "red";
-            container.append(rating);
+            // var container = document.createElement("span");
+            // var t=document.createTextNode('Rating: ')
+            // container.append(t)
+            // // rating.style.color = "red";
+            // container.append(rating);
            
+            // // const textnode = document.createTextNode(rest.data.genres);
             // const textnode = document.createTextNode(rest.data.genres);
-            const textnode = document.createTextNode(rest.data.genres);
             document.getElementById("genn").innerHTML =rest.data.genres
-            const gen=document.createElement('span')
-            var gent=document.createTextNode(" Genres :");
-            gen.append(gent);
-            gen.append(textnode)
-            let dd=document.createElement('span');
-            var tt=document.createTextNode('Language: ')
-            dd.append(tt)
+            // const gen=document.createElement('span')
+            // var gent=document.createTextNode(" Genres :");
+            // gen.append(gent);
+            // gen.append(textnode)
+            // let dd=document.createElement('span');
+            // var tt=document.createTextNode('Language: ')
+            // dd.append(tt)
           
             // container.append(t)
-            const textnode1 = document.createTextNode(rest.data.language);
+            // const textnode1 = document.createTextNode(rest.data.language);
             document.getElementById("langg").innerHTML = rest.data.language
-            let textnode2 = (rest.data.summary);
+            // let textnode2 = (rest.data.summary);
             document.getElementById("summ").innerHTML = rest.data.summary
             
-            const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
+            // const tagRegExp =  new RegExp('<\s*[^>]*>', 'g')
 
 
 
 
-             textnode2 = textnode2.replace(tagRegExp, '');
-             console.log(textnode2)
-             const textnode22=document.createTextNode(textnode2);
-             dd.append(textnode1)
-             let ddd=document.createElement('span');
-             let rt=document.createTextNode('Average runtime: ')
-             ddd.append(rt);
-            const textnode3 = document.createTextNode(rest.data.averageRuntime);
+            //  textnode2 = textnode2.replace(tagRegExp, '');
+            //  console.log(textnode2)
+            //  const textnode22=document.createTextNode(textnode2);
+            //  dd.append(textnode1)
+            //  let ddd=document.createElement('span');
+            //  let rt=document.createTextNode('Average runtime: ')
+            //  ddd.append(rt);
+            // const textnode3 = document.createTextNode(rest.data.averageRuntime);
             document.getElementById("avgg").innerHTML = rest.data.averageRuntime
             // const textnode4 = document.createTextNode(rest.show.webChannel.name);
-            ddd.append(textnode3)
+            // ddd.append(textnode3)
           
            
-            para.append(img);
-            // para.append(button)
-            para.append(gen)
-            var br = document.createElement("br");
-                // para.append(br)
-                para.append(br);
-            var br = document.createElement("br");
-            // para.append(br)
-            // para.append(rating)
-            para.append(container)
-            var br = document.createElement("br");
-                // para.append(br)
-                para.append(br);
-            para.append(dd)
-            var br = document.createElement("br");
-                // para.append(br)
-                para.append(br);
-                para.append(ddd)
-            var br = document.createElement("br");
-                // para.append(br)
-                para.append(br);
+            // para.append(img);
+            // // para.append(button)
+            // para.append(gen)
+            // var br = document.createElement("br");
+            //     // para.append(br)
+            //     para.append(br);
+            // var br = document.createElement("br");
+            // // para.append(br)
+            // // para.append(rating)
+            // para.append(container)
+            // var br = document.createElement("br");
+            //     // para.append(br)
+            //     para.append(br);
+            // para.append(dd)
+            // var br = document.createElement("br");
+            //     // para.append(br)
+            //     para.append(br);
+            //     para.append(ddd)
+            // var br = document.createElement("br");
+            //     // para.append(br)
+            //     para.append(br);
          
-            para.append(textnode22)
+            // para.append(textnode22)
 
 
 
-            button.innerHTML="Add to wishlist"
-             button.className="btn btn-outline-primary text "
-                my_form=document.createElement('FORM');
-my_form.name='myForm';
-my_form.method='GET';
+//             button.innerHTML="Add to wishlist"
+//              button.className="btn btn-outline-primary text "
+//                 my_form=document.createElement('FORM');
+// my_form.name='myForm';
+// my_form.method='GET';
  const idd=rest.data.id;
 //  console.log(idd)
 // console.log(cast.person.id)
 
- my_form.action=`/userinfo/add/${idd}`;
+//  my_form.action=`/userinfo/add/${idd}`;
  document.getElementById("linkk").href =`/userinfo/add/${idd}`;
-my_form.appendChild(button);
-para.append(my_form)
-// if(currentUser){
-//     console.log('yes ther is user')
-// }
-// else{
-//     console.log('no user')
-// }
-            document.getElementById("container").appendChild(para)
+// my_form.appendChild(button);
+// para.append(my_form)
+// // if(currentUser){
+// //     console.log('yes ther is user')
+// // }
+// // else{
+// //     console.log('no user')
+// // }
+//             document.getElementById("container").appendChild(para)
         }
         third();
         async function third(){
